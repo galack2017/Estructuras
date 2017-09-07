@@ -1,4 +1,4 @@
-package tarea2;
+package PuntosExtra;
 
 import java.util.NoSuchElementException;
 
@@ -23,7 +23,7 @@ public class LinkedList<E> implements List<E> {
 		}
 		
 		if(index < (size >> 1)) {
-			Node<E> x = header.next;
+			Node<E> x = header;
 			for(int i=0; i<index; i++)
 				x = x.next;
 			return x;
@@ -91,6 +91,10 @@ public class LinkedList<E> implements List<E> {
 			size++;
 		}
 	}
+        
+       
+        
+        
 
 	@Override
 	public E removeFirst() {
@@ -100,12 +104,8 @@ public class LinkedList<E> implements List<E> {
                 };
                 
                 Node<E> NodeToRemove = header.next;
-                Node<E> sig = NodeToRemove.next;
-                sig.prev=header;
-                header.next=sig;
-                
-                NodeToRemove.prev=null;
-                NodeToRemove.next=null;
+                header.next=NodeToRemove.next;
+                NodeToRemove.prev=NodeToRemove.next;
                 size--;
                 return NodeToRemove.value;
                
@@ -321,6 +321,57 @@ public class LinkedList<E> implements List<E> {
              return returnValue;
         }
         
+            public void move() {
+
+        for (int i = 0; i < size; i++) {
+            Node<E> prev=header.prev;
+            prev = header;
+            header = header.next;
+        }
+
+        System.out.println("KILLED : " + header.value);
+
+    }
+        
+        public E Josephus(int x){
+            
+            
+            Node<E> current = header;
+            Node<E> NodeToRemove;
+            Node<E> Ganador;
+            int count=0;
+            boolean bandera=true;
+            while(bandera==true){
+                //NodeToRemove=null;
+                if(size>0){
+                    
+            if(count==x-1){
+                if(current.next.value==null)
+                        current=current.next;
+                        
+                NodeToRemove = current.next;
+                //current.next=current.next.next;
+                Node<E> siguiente=current.next.next;
+                NodeToRemove.next=null;
+                NodeToRemove.prev=null;
+                current.next=siguiente;
+                siguiente.prev=current;
+                size--;
+                count=0;
+                Ganador=NodeToRemove;
+                System.out.println(NodeToRemove.value);
+                
+                //return NodeToRemove.value;
+            }
+            
+            current=current.next;
+            count++;
+            
+            }else{bandera=false;
+                    
+                }}
+            return null;
+        }
         
 
 }

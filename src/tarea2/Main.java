@@ -1,5 +1,49 @@
 package tarea2;
+
+import java.util.Random;
+
 public class Main {
+    
+    
+        
+        public static boolean isPalindrome(String word){
+           LinkedList<Character> letters= new LinkedList<Character>();
+           for(int i=0; i<word.length();i++){
+               char letter=word.charAt(i);
+               if(Character.isLetter(letter))
+                     letters.addLast(Character.toLowerCase(letter));
+               
+           }
+           while(letters.size()>1){
+               if(!letters.getFirst().equals(letters.getLast()))
+                   return false;
+               letters.removeFirst();
+               letters.removeLast();
+           }
+           
+           return true;
+        }
+        
+        public static LinkedList<Character> jumbleLetters(String word){
+            LinkedList<Character> letters = new LinkedList<Character>();
+            int x =0;
+            Random rnd = new Random();
+            int numero;
+
+            for(int i=0;i<word.length();i++){
+                numero= (int)(Math.random()*2);
+                if(numero==1){
+                    letters.addLast(word.charAt(i));
+                } else {letters.addFirst(word.charAt(i));
+                }
+                }
+            return letters;
+        }
+        
+        
+        
+        
+        
 
 	public static void main(String[] args) {
 		System.out.println("** TEST CIRCULAR DOUBLY-LINKEDLIST CLASS **");
@@ -119,5 +163,10 @@ public class Main {
 		strLinkedList.remove("World");
 		System.out.println(strLinkedList);
 		System.out.println();
+                
+                
+                System.out.println(isPalindrome("perro"));
+                System.out.println(isPalindrome("Anita lava la tina"));
+                System.out.println(jumbleLetters("Hola"));
 	}
 }
