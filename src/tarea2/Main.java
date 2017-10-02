@@ -24,6 +24,17 @@ public class Main {
            return true;
         }
         
+        public static int linearSearch(int[] x, int objetivo){
+        
+        for(int i=0; i<x.length;i++){
+            if(objetivo == x[i])
+                return i;
+            if(x[i]>objetivo)
+                return -1;
+        }
+        return -1;
+    }
+        
         public static LinkedList<Character> jumbleLetters(String word){
             LinkedList<Character> letters = new LinkedList<Character>();
             int x =0;
@@ -46,6 +57,7 @@ public class Main {
         
 
 	public static void main(String[] args) {
+                int [] arreglo = {1,2,3,4};
 		System.out.println("** TEST CIRCULAR DOUBLY-LINKEDLIST CLASS **");
 		System.out.println("\t** USING INTEGERS **");
 		LinkedList<Integer> iList = new LinkedList<Integer>();
@@ -167,6 +179,8 @@ public class Main {
                 
                 System.out.println(isPalindrome("perro"));
                 System.out.println(isPalindrome("Anita lava la tina"));
-                System.out.println(jumbleLetters("Hola"));
+                System.out.println(jumbleLetters("tank"));
+                System.out.println("Linear Search: "+linearSearch(arreglo, 4));
+                
 	}
 }
