@@ -35,6 +35,26 @@ public class Main {
         return -1;
     }
         
+        public static int binarySearch(int []x, int objetive){
+            int min =0;
+            int max = x.length-1;
+            int mid=0; 
+            while(min <= max){
+                mid = min+ (max-min)/2;
+                
+                if(objetive<x[mid]){
+                    max=mid-1;
+                }
+                if(objetive>x[mid]){
+                    min=mid+1;
+                }
+                if(objetive==x[mid]){
+                    return mid;
+                }
+            }
+            return -1;
+        }
+        
         public static LinkedList<Character> jumbleLetters(String word){
             LinkedList<Character> letters = new LinkedList<Character>();
             int x =0;
@@ -57,7 +77,7 @@ public class Main {
         
 
 	public static void main(String[] args) {
-                int [] arreglo = {1,2,3,4};
+                int [] arreglo = {1,2,3,4,7,9,34};
 		System.out.println("** TEST CIRCULAR DOUBLY-LINKEDLIST CLASS **");
 		System.out.println("\t** USING INTEGERS **");
 		LinkedList<Integer> iList = new LinkedList<Integer>();
@@ -180,7 +200,9 @@ public class Main {
                 System.out.println(isPalindrome("perro"));
                 System.out.println(isPalindrome("Anita lava la tina"));
                 System.out.println(jumbleLetters("tank"));
-                System.out.println("Linear Search: "+linearSearch(arreglo, 4));
+                System.out.println("Linear Search: "+linearSearch(arreglo, 34));
+                //System.out.println(binarySearch(arreglo, 2));
+                System.out.println("Binary Search: "+binarySearch(arreglo, 34));
                 
 	}
 }
