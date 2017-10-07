@@ -1,5 +1,6 @@
 package tarea2;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
@@ -55,6 +56,42 @@ public class Main {
             return -1;
         }
         
+        public static void shiftRight(int[] values, int start, int finish){
+            int x=values[finish+1];
+            for(int i=finish+1; i>start;i--){
+               values[i]=values[i-1];
+            }
+            values[start]=x;
+        }
+        
+        public static void insertionSort(int[] data){
+            
+            for(int i=1; i<data.length; i++){
+                for(int j=0; j<=i ;j++){
+                    if(data[i]<data[j]){
+                        shiftRight(data,j,i-1);
+                        
+                    }
+                }
+       
+            }
+            
+        }
+        
+        public static void selectionSort(int[]values){
+            int pequeño=0;
+            for(int i=1; i<values.length;i++){
+                for(int j=0; j<values.length;j++){
+                    if(values[i]<values[j]){
+                        pequeño=values[i];
+                        values[i]=values[j];
+                        values[j]=pequeño;
+                    }
+                }
+            }
+            
+        }
+        
         public static LinkedList<Character> jumbleLetters(String word){
             LinkedList<Character> letters = new LinkedList<Character>();
             int x =0;
@@ -77,7 +114,8 @@ public class Main {
         
 
 	public static void main(String[] args) {
-                int [] arreglo = {1,2,3,4,7,9,34};
+                int [] arreglo = {12,1,2,3,4,7,9,34};
+                int [] arreglo2 = {12,6,2,3,5,7,9,34,1};
 		System.out.println("** TEST CIRCULAR DOUBLY-LINKEDLIST CLASS **");
 		System.out.println("\t** USING INTEGERS **");
 		LinkedList<Integer> iList = new LinkedList<Integer>();
@@ -203,6 +241,13 @@ public class Main {
                 System.out.println("Linear Search: "+linearSearch(arreglo, 34));
                 //System.out.println(binarySearch(arreglo, 2));
                 System.out.println("Binary Search: "+binarySearch(arreglo, 34));
+                insertionSort(arreglo);
+                System.out.println(Arrays.toString(arreglo));
+                System.out.println(Arrays.toString(arreglo2));
+                selectionSort(arreglo2);
+                System.out.println(Arrays.toString(arreglo2));
+                //shiftRight(arreglo, 1, 4);
+                //System.out.println(Arrays.toString(arreglo));
                 
 	}
 }
