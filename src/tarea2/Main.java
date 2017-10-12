@@ -92,6 +92,76 @@ public class Main {
             
         }
         
+        public static void BubbleSort(int[] values){
+            int temp;
+                for(int i=0; i<values.length;i++){
+                    for(int j=1; j<values.length-i;j++){
+                    if(values[j-1]>values[j]){
+                      temp=values[j-1];
+                      values[j-1]=values[j];
+                      values[j]=temp;
+                      //bandera=false;
+                    } 
+                }
+            }
+            
+        }
+        
+        public static void makeHeap(int values[]) {
+            for (int i = 0; i < values.length; i++) {
+			int index = i;
+			while (index != 0) {
+				int parent = (index - 1) / 2;
+				
+				if(values[index] <= values[parent]) {
+					break;
+				}
+				
+				int temp = values[index];
+				values[index] = values[parent];
+				values[parent] = temp;
+				
+				index  = parent;
+			}
+		}
+	}
+        
+        public static int removeTopItem(int [] values, int count){
+            int result=values[0];
+            values[0]=values[count-1];
+            int index=0;
+            while(true){
+                int child1=2*index+1;
+                int child2=2*index+2;
+                
+                if(child1>=count){
+                    child1=index;
+                }
+                if(child2>=count){
+                    child2=index;
+                }
+                
+                if(values[index]>=values[child1]&&values[index]>=values[child2]){
+                    break;
+                }
+                int swapChild=child1;
+                if(values[child2]>values[child1]){
+                    swapChild=child2;
+                }
+                int temp=values[index];
+                values[index]=values[swapChild];
+                values[swapChild]=temp;
+                index=swapChild;
+            }
+            return result;
+        }
+        
+        public static void heapSort(int[] values){
+            makeHeap(values);
+            
+            
+        }
+        
         public static LinkedList<Character> jumbleLetters(String word){
             LinkedList<Character> letters = new LinkedList<Character>();
             int x =0;
@@ -116,6 +186,8 @@ public class Main {
 	public static void main(String[] args) {
                 int [] arreglo = {12,1,2,3,4,7,9,34};
                 int [] arreglo2 = {12,6,2,3,5,7,9,34,1};
+                int [] arreglo3 = {12,9,2,45,5,67,9,34,1,90};
+                int [] arreglo4 = {6,5,3,1,8,7,2,4};
 		System.out.println("** TEST CIRCULAR DOUBLY-LINKEDLIST CLASS **");
 		System.out.println("\t** USING INTEGERS **");
 		LinkedList<Integer> iList = new LinkedList<Integer>();
@@ -241,13 +313,17 @@ public class Main {
                 System.out.println("Linear Search: "+linearSearch(arreglo, 34));
                 //System.out.println(binarySearch(arreglo, 2));
                 System.out.println("Binary Search: "+binarySearch(arreglo, 34));
-                insertionSort(arreglo);
+                insertionSort(arreglo2);
+                System.out.println(Arrays.toString(arreglo2));
                 System.out.println(Arrays.toString(arreglo));
-                System.out.println(Arrays.toString(arreglo2));
-                selectionSort(arreglo2);
-                System.out.println(Arrays.toString(arreglo2));
+                selectionSort(arreglo);
+                System.out.println(Arrays.toString(arreglo));
                 //shiftRight(arreglo, 1, 4);
                 //System.out.println(Arrays.toString(arreglo));
-                
+                System.out.println(Arrays.toString(arreglo3));
+                BubbleSort(arreglo3);
+                System.out.println(Arrays.toString(arreglo3));
+                makeHeap(arreglo4);
+                System.out.println(Arrays.toString(arreglo4));
 	}
 }
