@@ -158,9 +158,37 @@ public class Main {
         
         public static void heapSort(int[] values){
             makeHeap(values);
+            int count = values.length;
             
+            for(int i=values.length-1;i>=0;i--){
+              int temp=values[0];
+              values[0]=values[i];
+              values[i]=temp;
+              int values2[]=new int[count-1];
+              for(int n=0; n<values2.length;n++){
+                  values2[n]=values[n];
+              }
+                makeHeap(values2);
+                for(int m=0;m<values2.length;m++){
+                    values[m]=values2[m];
+                }
+                count++;
+            }
             
         }
+        
+        public static int[] heapSortt(int[] values){
+            int z;
+            int temp[] = new int[values.length];
+            makeHeap(values);
+            for(int i=values.length-1;i>=0;i--){
+                z=removeTopItem(values, i+1);
+                temp[i]=z;
+            }
+            return temp;
+        }
+        
+        
         
         public static LinkedList<Character> jumbleLetters(String word){
             LinkedList<Character> letters = new LinkedList<Character>();
@@ -323,7 +351,15 @@ public class Main {
                 System.out.println(Arrays.toString(arreglo3));
                 BubbleSort(arreglo3);
                 System.out.println(Arrays.toString(arreglo3));
+                System.out.println(Arrays.toString(arreglo4));
                 makeHeap(arreglo4);
                 System.out.println(Arrays.toString(arreglo4));
+                //removeTopItem(arreglo4, 8);
+                //removeTopItem(arreglo4, 7);
+                //removeTopItem(arreglo4, 6);
+                //System.out.println(removeTopItem(arreglo4, 5));
+                System.out.println(Arrays.toString(arreglo4));
+                int []arr=heapSortt(arreglo4);
+                System.out.println(Arrays.toString(arr));
 	}
 }
