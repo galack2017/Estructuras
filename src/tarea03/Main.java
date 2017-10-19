@@ -3,6 +3,163 @@ import java.util.Arrays;
 
 public class Main {
     
+            //Parte 1
+        public static String reverseParentheses(String s){
+            Stack<Character> caracter = new Stack<>();
+            Stack<Character> almacenar = new Stack<>();
+            Stack<Character> resultante = new Stack<>();
+            int count0=0;
+            for(int i=s.length()-1;i>=0;i--){
+               char symbol = s.charAt(i);
+               caracter.push(symbol);
+                System.out.println(Arrays.toString(caracter.toArray())+ " Aquí");
+            }
+            //for(int i=0; i<s.length();i++)
+            
+            while(!caracter.empty()){
+                //System.out.println((caracter.peek()));
+                if(caracter.peek().equals('(')){
+                    count0++;
+                   caracter.pop();
+                   char x=caracter.pop();
+                   char y=caracter.pop();
+                   char z=almacenar.push(y);
+                   char q=almacenar.push(x);
+                   resultante.push(y);
+                   resultante.push(x);
+               }
+                if(caracter.peek().equals(')')){
+                    count0++;
+                    caracter.pop();
+                }
+                resultante.push(caracter.pop());
+            }
+            String res=""; 
+            String res2="";
+            
+            for(int j=0;j<s.length()-count0;j++){
+                res2+=resultante.pop();
+            }
+            for(int i=s.length()-count0-1;i>=0;i--){
+                res+=res2.charAt(i);
+            }
+            
+            return res;
+            
+        }
+        
+        //Parte 2 :
+        public static String reverseParentheses2(String s){
+            Stack<Character> caracter = new Stack<>();
+            Stack<Character> almacenar = new Stack<>();
+            Stack<Character> resultante = new Stack<>();
+            Stack<Character> resultante2 = new Stack<>();
+            Stack<Character> resultante3 = new Stack<>();
+            for(int i=s.length()-1;i>=0;i--){
+               char symbol = s.charAt(i);
+               caracter.push(symbol);
+                System.out.println(Arrays.toString(caracter.toArray())+ " Aquí");
+            }
+            //for(int i=0; i<s.length();i++)
+            
+            while(!caracter.empty()){
+                //System.out.println((caracter.peek()));
+                if(caracter.peek().equals('(')){
+                   caracter.pop();
+                   char x=caracter.pop();
+                   if(caracter.peek().equals('(')){
+                       while(!caracter.peek().equals(')')){
+                           resultante2.push(caracter.pop());
+                       }
+                       if(caracter.peek().equals(')')){
+                           caracter.pop();
+                           resultante3.push(resultante2.pop());
+                       }
+                   }
+                   char y=caracter.pop();
+                   char z=almacenar.push(y);
+                   char q=almacenar.push(x);
+                   resultante.push(y);
+                   resultante.push(x);
+               }
+                if(caracter.peek().equals(')'))
+                    caracter.pop();
+                    resultante.push(caracter.pop());
+            }
+            String res=""; 
+            String res2="";
+            
+
+            
+            return res;
+            
+        }
+        
+        public static String convertInfixToPostfix(String expr){
+            Stack<String> pila=new Stack<>();
+            Queue<String> resultante = new Queue<>();
+            Queue<String> fila = new Queue<>();
+            
+            for(int i=0; i<expr.length();i++){
+                char symbol = expr.charAt(i);
+                fila.offer(symbol+"");
+                }
+            for(int i=0;i<expr.length();i++){
+                String topElement = fila.remove();
+                //System.out.println(topElement);
+                if(topElement.equals("0")||topElement.equalsIgnoreCase("1")||topElement.equalsIgnoreCase("2")||topElement.equalsIgnoreCase("3")||topElement.equalsIgnoreCase("4")
+                        ||topElement.equalsIgnoreCase("5")||topElement.equalsIgnoreCase("6")||topElement.equalsIgnoreCase("7")||topElement.equalsIgnoreCase("8")
+                        ||topElement.equalsIgnoreCase("9")){
+                    resultante.offer(topElement);
+                }
+                if(topElement.equalsIgnoreCase("(")){
+                    pila.push(topElement);
+                }
+                if(topElement.equalsIgnoreCase("-") || topElement.equalsIgnoreCase("+") || topElement.equalsIgnoreCase("*") || topElement.equalsIgnoreCase("/")){
+                    
+                    while(!pila.empty() && !pila.peek().equalsIgnoreCase("(")){
+                        String stackTop=pila.peek();
+                        if(hasHigherPrecedence(stackTop, topElement)==true){
+                            String cadena = pila.pop();
+                            resultante.offer(cadena);
+                        }
+                    }
+                    pila.push(topElement);
+                }
+                if(topElement.equalsIgnoreCase(")")){
+                    
+                    if(!pila.empty()&&!pila.peek().equalsIgnoreCase("(")){
+                        String fuera = pila.pop();
+                        resultante.offer(fuera);
+                        if(!pila.empty()){
+                            pila.pop();
+                            while(!pila.empty()){
+                              String quitar=pila.pop();
+                              resultante.offer(quitar);
+                                
+                            }
+                        }
+                    }
+                    
+                }  
+            }
+            String result = "";
+            int x=resultante.size();
+            for(int i=0;i<x;i++){
+            String cad= resultante.remove();
+            result+=cad+" ";
+        }
+            
+            return result+" ";
+                
+        }
+        
+        public static boolean hasHigherPrecedence(String stackTop, String operator) { 
+            return !((stackTop.equals("+") || stackTop.equals("-"))
+                &&          (operator.equals("*") || operator.equals("/")));
+}
+        
+    
         public static int GenerarOperacion(int x, int y,char z){
             int numeroNuevo=0;
                     if(z=='+')
@@ -104,13 +261,10 @@ public class Main {
 		String cadena1 = "(((a{f{f(g)hh}}tyju))]";
                 String cadena2= "245*/";
                 String cadena3 = "imPrimeido";
-                Impresora impresora = new Impresora();
-                impresora.printDocument(cadena2);
-                impresora.printDocument(cadena1);
+                String cadena4= "3*(2-5)";
+                String cadena5= "a(bc)de";
+                String cadena6= "a(b(cde)fg)h";
                 
-                impresora.runPrinter();
-                impresora.printDocument(cadena3);
-                impresora.runPrinter();
 		// TODO: push every item in inputArray into a Stack
 		Stack<Integer> temporal = new Stack<Integer>();
                 for(int i=1; i<=inputArray.length;i++){
@@ -231,5 +385,10 @@ public class Main {
                 System.out.println(checkforBalance(cadena1));
                 System.out.println(postfixEval(cadena2));
                 Fibonacci(10);
+                
+                String x=convertInfixToPostfix(cadena4);
+                System.out.println(x);
+                System.out.println(reverseParentheses(cadena5));
+                System.out.println(reverseParentheses2(cadena6));
 	}
 }
