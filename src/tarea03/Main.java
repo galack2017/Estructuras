@@ -3,97 +3,167 @@ import java.util.Arrays;
 
 public class Main {
     
-            //Parte 1
+            //Parte 1 a(bc)de
         public static String reverseParentheses(String s){
             Stack<Character> caracter = new Stack<>();
             Stack<Character> almacenar = new Stack<>();
             Stack<Character> resultante = new Stack<>();
-            int count0=0;
+            Queue<Character>cola= new Queue<>();
+            int count0=0,count=0;
             for(int i=s.length()-1;i>=0;i--){
                char symbol = s.charAt(i);
                caracter.push(symbol);
-                System.out.println(Arrays.toString(caracter.toArray())+ " Aquí");
             }
             //for(int i=0; i<s.length();i++)
             
             while(!caracter.empty()){
                 //System.out.println((caracter.peek()));
                 if(caracter.peek().equals('(')){
+                    
                     count0++;
                    caracter.pop();
-                   char x=caracter.pop();
-                   char y=caracter.pop();
-                   char z=almacenar.push(y);
-                   char q=almacenar.push(x);
-                   resultante.push(y);
-                   resultante.push(x);
+                   while(!caracter.peek().equals(')')){
+                       
+                       almacenar.push(caracter.pop());
+                       count++;
+                       //System.out.println(Arrays.toString(cola.toArray()));
+                       //almacenar.push(caracter.pop());
+                       
+                   }
+                   if(caracter.peek().equals(')')){
+                       count0++;
+                       caracter.pop();
+                   }
+                       
+                   for(int i=count-1;i>=0;i--){
+                       resultante.push(almacenar.pop());
+                   }
+                   //caracter.pop();
+                    
                }
-                if(caracter.peek().equals(')')){
-                    count0++;
-                    caracter.pop();
-                }
+                
                 resultante.push(caracter.pop());
             }
             String res=""; 
             String res2="";
             
-            for(int j=0;j<s.length()-count0;j++){
-                res2+=resultante.pop();
-            }
             for(int i=s.length()-count0-1;i>=0;i--){
-                res+=res2.charAt(i);
+                res+=resultante.pop();
+            }
+            for(int i=res.length()-1;i>=0;i--){
+                res2+=res.charAt(i);
             }
             
-            return res;
+            return "Resultado : "+res2;
             
         }
         
-        //Parte 2 :
-        public static String reverseParentheses2(String s){
-            Stack<Character> caracter = new Stack<>();
-            Stack<Character> almacenar = new Stack<>();
-            Stack<Character> resultante = new Stack<>();
-            Stack<Character> resultante2 = new Stack<>();
-            Stack<Character> resultante3 = new Stack<>();
-            for(int i=s.length()-1;i>=0;i--){
-               char symbol = s.charAt(i);
-               caracter.push(symbol);
-                System.out.println(Arrays.toString(caracter.toArray())+ " Aquí");
+        public static String reversePa(String cadena){
+            Stack<Character> letters = null;
+            String result = "";
+            
+            for(int i=0;i<cadena.length();i++){
+                char ch = cadena.charAt(i);
+                if(ch=='('){
+                    letters = new Stack<Character>();
+                }else if (ch == ')'){
+                    while(!letters.empty()){
+                        result+=letters.pop();
+                    }
+                    letters=null;
+                }else{
+                    if(letters != null){
+                        letters.push(ch);
+                    }else{
+                        result+=ch;
+                    }
+                }
             }
-            //for(int i=0; i<s.length();i++)
-            
-            while(!caracter.empty()){
-                //System.out.println((caracter.peek()));
-                if(caracter.peek().equals('(')){
-                   caracter.pop();
-                   char x=caracter.pop();
-                   if(caracter.peek().equals('(')){
-                       while(!caracter.peek().equals(')')){
-                           resultante2.push(caracter.pop());
-                       }
-                       if(caracter.peek().equals(')')){
-                           caracter.pop();
-                           resultante3.push(resultante2.pop());
-                       }
-                   }
-                   char y=caracter.pop();
-                   char z=almacenar.push(y);
-                   char q=almacenar.push(x);
-                   resultante.push(y);
-                   resultante.push(x);
-               }
-                if(caracter.peek().equals(')'))
-                    caracter.pop();
-                    resultante.push(caracter.pop());
+            return result;
+        }
+        
+        
+        public static void quickSort(int values[],int start,int end){
+            //If the list has no more tahn one element, it's sorted
+            if(start>=end){
+                return;
             }
-            String res=""; 
-            String res2="";
             
-
+            //Use the first item as the dividing item
+            int divider=values[start];
             
-            return res;
+            //Move items < divider to the fornt of the array and
+            //items >= divider to the end of the array
+            Stack <Integer> mayores = new Stack<>();
+            Stack <Integer> menores = new Stack<>();
+            
+            for(int i=start+1;i<=end;i++){
+                if(values[i]<divider){
+                    mayores.push(values[i]);
+                }else{
+                    menores.push(values[i]);
+                }
+            }
+            System.out.println("Mayores"+Arrays.toString(mayores.toArray()));
+            System.out.println("mENORES:"+Arrays.toString(menores.toArray()));
+            int i = start;
+            while(!mayores.empty()){
+                values[i++]=mayores.pop();
+            }
+            int middle=i++;
+            values[middle]=divider;
+            while(!menores.empty()){
+                values[i]=menores.pop();
+            }
+            
+            //Recursively sort the two halves
+            quickSort(values,start,middle-1);
+            quickSort(values,middle+1,end);
+        }
+        
+        
+        public static void MergeSort(int []values,int scratch[],int start,int end){
+            if(start>=end){
+                return;
+            }else{
+                int midpoint = (start+end)/2;
+                int leftIndex=start;
+                int rigthIndex=midpoint+1;
+                int scratchIndex=leftIndex;
+                MergeSort(values, scratch, start, midpoint);
+                MergeSort(values, scratch, midpoint+1, end);
+                while(leftIndex<=midpoint && rigthIndex <=end){ 
+                    if(values[leftIndex]<=values[rigthIndex]){
+                        scratch[scratchIndex]=values[leftIndex];
+                        leftIndex=leftIndex+1;
+                    }else{
+                        scratch[scratchIndex]=values[rigthIndex];
+                        rigthIndex=rigthIndex+1;
+                    }
+                    scratchIndex=scratchIndex+1;
+                }
+               
+                
+                for(int i=rigthIndex;i<=end;i++){
+                    //scratchIndex=midpoint+1;
+                    scratch[scratchIndex]=values[i];
+                    scratchIndex=scratchIndex+1;
+                }
+                
+                for(int i=leftIndex;i<=midpoint;i++){
+                    //scratchIndex=start;
+                    scratch[scratchIndex]=values[i];
+                    scratchIndex=scratchIndex+1;
+                }
+                
+                
+                for(int i=start;i<=end;i++){
+                    values[i]=scratch[i];
+                }
+            }
             
         }
+        
         
         public static String convertInfixToPostfix(String expr){
             Stack<String> pila=new Stack<>();
@@ -263,7 +333,8 @@ public class Main {
                 String cadena3 = "imPrimeido";
                 String cadena4= "3*(2-5)";
                 String cadena5= "a(bc)de";
-                String cadena6= "a(b(cde)fg)h";
+                String cadena6= "a(bcdefg)h";
+                String cadena7= "(ab)(cd)(ef)g";
                 
 		// TODO: push every item in inputArray into a Stack
 		Stack<Integer> temporal = new Stack<Integer>();
@@ -388,7 +459,17 @@ public class Main {
                 
                 String x=convertInfixToPostfix(cadena4);
                 System.out.println(x);
-                System.out.println(reverseParentheses(cadena5));
-                System.out.println(reverseParentheses2(cadena6));
+                System.out.println(reverseParentheses(cadena6));
+               // System.out.println(reverseParentheses2(cadena6));
+                int uArray[]={10,4,1,240,1024,23,21,3048,0,8000,1000,4,3,14,16,15,9};
+                int scratch[]=new int[uArray.length];
+                //System.out.println("Before: "+Arrays.toString(uArray));
+                System.out.println("Antes del ordenamiento MergeSort: "+Arrays.toString(uArray));
+                //quickSort(uArray, 0, uArray.length-1);
+                //Aquí se ordena
+                MergeSort(uArray,scratch,0,uArray.length-1);
+                //System.out.println("QuickSort: "+Arrays.toString(uArray));
+                System.out.println("MergeSort: "+Arrays.toString(uArray));
+                
 	}
 }
