@@ -3,6 +3,158 @@ import java.util.Arrays;
 
 public class Main {
     
+    
+       
+        //Examen 3
+        String cadena;
+        public static String allStar(String str){
+            if("".equals(str)){
+                return "";
+            }else{
+                String cadena = str.substring(0, 1)+"*";
+                //int x=1;
+                return cadena + allStar(str.substring(1));
+            }
+        }
+        
+        public static String endX(String str){
+            String cadena = str.substring(0, 1);
+            if(!cadena.equalsIgnoreCase("x")){
+               return str; 
+            }else{
+                String cadenaNueva = str.substring(1);
+                return endX(cadenaNueva)+cadena;
+            }
+        }
+        
+        
+        
+        
+        
+        public static LinkedList<Integer> intersect(LinkedList<Integer> list1, LinkedList<Integer>list2){
+            LinkedList <Integer> lista = new LinkedList<Integer>();
+            while(!list1.isEmpty()){
+                for(int i=0;i<list1.size();i++){
+                    int x=list1.get(i);
+                    int y=list2.get(i);
+                    if(x==y){
+                        lista.addFirst(y);
+                    }
+                    list1.remove(x);
+                }
+            }
+            return lista;
+        }
+        
+        
+        
+        
+        public static LinkedList<Integer> difference(LinkedList<Integer> list1,LinkedList<Integer> list2){
+            LinkedList <Integer> lista = new LinkedList<Integer>();
+            int x=0;
+            int y=0;
+            while(!list1.isEmpty()){
+                for(int i=0;i<list1.size();i++){
+                    x=list1.removeLast();
+                    y=list2.get(i);
+                    if(x!=y){
+                        lista.addFirst(y);
+                    }
+                }
+            }
+            return lista;
+        }
+        
+        
+        
+        
+        
+    
+        //Ejercicios extra
+        public static String toBinary(int n){
+            if(n==0){
+                return "";
+            }else{
+                int x=n%2;
+                return toBinary(n/2)+x;
+            }
+        }
+    
+        //Ejercicios con Filas
+        public static Queue<Integer> merge(Queue<Integer> q1, Queue<Integer> q2){
+            Queue<Integer> fila = new Queue<Integer>();
+            while(!q1.isEmpty() && !q2.isEmpty()){
+                if(q1.element()>q2.element()){
+                    fila.offer(q1.remove());
+                }else{
+                    if(q1.element()<q2.element()){
+                    fila.offer(q2.remove());
+                    }else{
+                      fila.offer(q1.remove());
+                      fila.offer(q2.remove());  
+                    }
+                }
+            }
+            if(!q1.isEmpty()){
+                    while(!q1.isEmpty()){
+                        fila.offer(q1.remove());
+                    }
+                }
+            if(!q2.isEmpty()){
+                    while(!q2.isEmpty()){
+                        fila.offer(q2.remove());
+                    }
+                }
+            return fila;
+        }
+        
+    
+        //Ejercicos recursión
+        public static int max(LinkedList<Integer> list){
+            if(list.isEmpty()){
+                return Integer.MIN_VALUE;
+            }else{
+                int mayor=list.removeFirst();
+                int menor=max(list);
+                if(mayor > menor){
+                    return mayor;
+                }else{
+                    return menor;
+                }
+            }
+        }
+        
+        public static int consecutiveAddition(int start, int end){
+            if(start>end){
+                return 0;
+            }else{
+                return start+consecutiveAddition(start+1, end);
+            }
+        }
+    
+    
+        public static int gcd(int m, int n){
+            if(m==n){
+                return m;
+            }else{
+                if(m>n){
+                    return gcd(m-n, n);
+                }
+                if(n>m){
+                    return gcd(m, n-m);
+                }
+            }
+            return 0;
+        }
+        
+        public static int pow(int base, int exponent){
+            if(exponent==0){
+                return 1;
+            }else{
+                return base * pow(base,exponent-1);
+            }
+        }
+    
             //Parte 1 a(bc)de
         public static String reverseParentheses(String s){
             Stack<Character> caracter = new Stack<>();
@@ -335,6 +487,26 @@ public class Main {
                 String cadena5= "a(bc)de";
                 String cadena6= "a(bcdefg)h";
                 String cadena7= "(ab)(cd)(ef)g";
+                BinaryNode root = new BinaryNode(4);
+                BinaryNode node1 = new BinaryNode(1);
+                BinaryNode node2 = new BinaryNode(2);
+                BinaryNode node3 = new BinaryNode(3);
+                BinaryNode node5 = new BinaryNode(5);
+                BinaryNode node6 = new BinaryNode(6);
+                BinaryNode node7 = new BinaryNode(7);
+                BinaryNode node8 = new BinaryNode(8);
+                root.leftChild=node2;
+                root.rightChild=node5;
+                node2.leftChild=node1;
+                node2.rightChild=node3;
+                node5.rightChild=node7;
+                node7.leftChild=node6;
+                node7.rightChild=node8;
+                
+                
+                
+                
+                
                 
 		// TODO: push every item in inputArray into a Stack
 		Stack<Integer> temporal = new Stack<Integer>();
@@ -447,7 +619,29 @@ public class Main {
                 }
         }
                 
-		
+                Queue<Integer> fila = new Queue<>();
+                Queue<Integer> fila2 = new Queue<>();
+                for(int i=5;i>=0;i--){
+                    fila.offer(i);
+                }
+                for(int j=8;j>=3;j--){
+                    fila2.offer(j);
+                }
+                fila.offer(-5);
+                fila2.offer(-3);
+		LinkedList<Integer> lista = new LinkedList<>();
+                LinkedList<Integer> lista2 = new LinkedList<>();
+                lista.addFirst(2);
+                lista.addFirst(2);
+                lista.addFirst(18);
+                lista.addFirst(4);
+                lista.addFirst(15);
+                lista.addFirst(2);
+                lista2.addFirst(1);
+                lista2.addFirst(2);
+                lista2.addFirst(3);
+                lista2.addFirst(1);
+                lista2.addFirst(18);
 		System.out.println("At the end");
 		System.out.println("Hanoi tower #1: " + Arrays.toString(towerOne.toArray()));
 		System.out.println("Hanoi tower #2: " + Arrays.toString(towerTwo.toArray()));
@@ -470,6 +664,39 @@ public class Main {
                 MergeSort(uArray,scratch,0,uArray.length-1);
                 //System.out.println("QuickSort: "+Arrays.toString(uArray));
                 System.out.println("MergeSort: "+Arrays.toString(uArray));
+                //root.preorderTraversal();
+                //root.inorderTraversal();
+                //root.postorderTraversal();
+                root.depthFirstTraversal();
+                System.out.println(gcd(90, 126));
+                System.out.println(pow(2, 4));
+                //System.out.println(max(lista));
+                System.out.println(consecutiveAddition(1, 7));
+                System.out.println(Arrays.toString(lista.toArray()));
+                System.out.println(lista2.count(1));
+                System.out.println(Arrays.toString(lista2.toArray()));
+                //System.out.println(lista2.removeFirstOcurrence(2));
+                System.out.println(Arrays.toString(lista2.toArray()));
+                //System.out.println(lista2.removeLastOcurrence(1));
+                System.out.println(Arrays.toString(lista2.toArray()));
+                lista2.addFirst(1);
+                
+                System.out.println(Arrays.toString(lista2.toArray()));
+                System.out.println("Ultimo indice: "+lista2.LastIndexoF(2));
+                System.out.println(Arrays.toString(fila.toArray()));
+                System.out.println(Arrays.toString(fila2.toArray()));
+                Queue <Integer> res = merge(fila, fila2);
+                System.out.println(Arrays.toString(res.toArray()));
+                System.out.println(toBinary(9));
+                String xy = "xxhixx";
+                //allStar(xy);
+                //endX(xy);
+                System.out.println(lista);
+                System.out.println(lista2);
+                System.out.println(intersect(lista, lista2));
+                System.out.println(allStar(xy));
+                System.out.println(endX(xy));
+                System.out.println(difference(lista, lista2));
                 
 	}
 }
