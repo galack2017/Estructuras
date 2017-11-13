@@ -111,6 +111,45 @@ public class BinaryNode {
         }   
     }
     
+    public void addNode(int value){
+        BinaryNode current = this;
+        if(value<current.value){
+            if(current.leftChild==null){
+                current.leftChild= new BinaryNode(value);
+            }else{
+                current.leftChild.addNode(value);
+            }
+        }else{
+            if(value>current.value){
+             if(current.rightChild==null){
+                current.rightChild=new BinaryNode(value);
+             }else{
+                current.rightChild.addNode(value);
+             }
+            }
+        }
+    }
+    
+    public BinaryNode findNode(int target){
+        BinaryNode current = this;
+        if(target==this.value){
+            return this;
+        }
+        if(target<value){
+            if(current.leftChild==null){
+                return null;
+            }else{
+                return current.leftChild.findNode(target);
+            }
+        }else{
+            if(current.rightChild==null){
+                return null;
+            }else{
+                return current.rightChild.findNode(target);
+            }
+        }
+    }
+    
     //private void depthFirst(BinaryNode node){
         //Queue <Integer> fila = new Queue<Integer>();
         //Stack <Integer> stack=new Stack<Integer>();
