@@ -1,23 +1,117 @@
 package tarea03;
 import java.util.Arrays;
+import java.util.Scanner;
+
 
 public class Main {
     
     
+      public static int get(Stack<Integer> stack, int i){
+          int index =0;
+          int valorRetorno=0;
+          Stack<Integer> temp = new Stack<Integer>();
+          while(!stack.empty()){
+              if(i==index){
+                  valorRetorno=stack.peek();
+                  temp.push(stack.pop());
+              }else{
+                  //stack.pop();
+                  temp.push(stack.pop());
+                  
+              }
+              index++;
+              
+          }
+          while(!temp.empty()){
+              stack.push(temp.pop());
+              System.out.println(Arrays.toString(stack.toArray()));
+          }
+          return valorRetorno;
+      }
+      
+      
+      public static void nToTop(Stack<Integer> stack, int i){
+        int index=0;
+        int valorEsperado=0;
+        Stack<Integer> temp = new Stack<Integer>();
+        while(!stack.empty()){
+            if(index==i){
+                valorEsperado=stack.pop();
+            }else{
+                temp.push(stack.pop());
+            }
+            index++;
+        }
+        while(!temp.empty()){
+            stack.push(temp.pop());
+        }
+        stack.push(valorEsperado);
+    }
+    
+    
+        //11) Repaso
+    
+       public static int getSmallestFactor(int n){
+           for(int i=2; i<=n; i++){
+               if(n%i==0){
+                   return i;
+               }
+           }
+           return 0;
+       }
+       
+       
+       public static void programa(){
+           Scanner scan = new Scanner(System.in);
+           System.out.println("Teclee un número entero mayor a 1");
+           int numero = scan.nextInt();
+           Queue<Integer> fila = new Queue<>();
+           fila.offer(numero);
+           int num,num2;
+           if(numero<=1){
+               System.out.println("Era mayor a 1 ¬¬'!");
+               return;
+           }
+           System.out.println("\nFactores primos de "+numero+" :\n");
+           while(!fila.isEmpty()){
+               num=fila.remove();
+               num2=getSmallestFactor(num);
+               if(num==num2){
+                   System.out.println(num);
+                   return;
+               }else{
+                   System.out.println(num2);
+                   fila.offer(num/num2);
+               }
+           }
+       }
+       
+       
+       
+        
+    
+    
        
         //Examen 3
-        String cadena;
         public static String allStar(String str){
-            if("".equals(str)){
+             if("".equals(str)){
                 return "";
             }else{
-                String cadena = str.substring(0, 1)+"*";
+                 String cadena ="";
+                 if(str.length()==1){
+                     cadena=str.substring(0,1);
+                 }else{
+                cadena = str.substring(0, 1)+"*";
+                 }
                 //int x=1;
                 return cadena + allStar(str.substring(1));
             }
         }
         
         public static String endX(String str){
+            if(str.equalsIgnoreCase("")){
+                return "";
+            }else{
             String cadena = str.substring(0, 1);
             if(!cadena.equalsIgnoreCase("x")){
                return str; 
@@ -25,49 +119,82 @@ public class Main {
                 String cadenaNueva = str.substring(1);
                 return endX(cadenaNueva)+cadena;
             }
+            }
         }
         
-        
-        
-        
+        public static LinkedList<Integer> difference(LinkedList<Integer> list1, LinkedList<Integer>list2){
+            LinkedList <Integer> lista = new LinkedList<Integer>();
+            int num = 0;
+            for(int i=0; i<list1.size();i++){
+                num = list1.get(i);
+                
+                for(int j=0;j<list2.size();j++){
+                    if(!list2.contains(num)){
+                        if(!lista.contains(num))
+                            lista.addLast(num);
+                    }
+                    break;
+                }
+            }
+            return lista;
+        }
         
         public static LinkedList<Integer> intersect(LinkedList<Integer> list1, LinkedList<Integer>list2){
             LinkedList <Integer> lista = new LinkedList<Integer>();
-            while(!list1.isEmpty()){
-                for(int i=0;i<list1.size();i++){
-                    int x=list1.get(i);
-                    int y=list2.get(i);
-                    if(x==y){
-                        lista.addFirst(y);
+            int num = 0;
+            for(int i=0; i<list1.size();i++){
+                num = list1.get(i);
+                
+                for(int j=0;j<list2.size();j++){
+                    if(list2.contains(num)){
+                        if(!lista.contains(num)){
+                            lista.addLast(num);
+                        }//break;
                     }
-                    list1.remove(x);
+                    break;
                 }
             }
             return lista;
         }
         
-        
-        
-        
-        public static LinkedList<Integer> difference(LinkedList<Integer> list1,LinkedList<Integer> list2){
-            LinkedList <Integer> lista = new LinkedList<Integer>();
-            int x=0;
-            int y=0;
-            while(!list1.isEmpty()){
-                for(int i=0;i<list1.size();i++){
-                    x=list1.removeLast();
-                    y=list2.get(i);
-                    if(x!=y){
-                        lista.addFirst(y);
+        public static int maxDepth(String str){
+            Stack<Character> pila = new Stack<Character>();
+            Stack<Integer> numeros = new Stack<Integer>();
+            char x;
+            int count=0;
+            int numero=0;
+            if(checkforBalance(str).equalsIgnoreCase("Correcto\n")){
+            for(int i=0; i<str.length();i++){
+                x=str.charAt(i);
+                if(x=='('){
+                    pila.push(x);
+                    count++;
+                    numero =count;
+                    numeros.push(numero);
+                }
+                if(x==')'){
+                    pila.pop();
+                    count--;
+                }
+            }
+            int mayor=0;
+            int siguienteNumero=0;
+            
+            mayor = numeros.pop();
+            while(!numeros.empty()){
+                if(!numeros.empty()){
+                    siguienteNumero=numeros.pop();
+                    if(siguienteNumero>mayor){
+                        mayor=siguienteNumero;
                     }
                 }
             }
-            return lista;
+            return mayor;
+        }else{
+                System.out.println("Parentesis no balanceados");
+                return 0;
+            }
         }
-        
-        
-        
-        
         
     
         //Ejercicios extra
@@ -477,6 +604,9 @@ public class Main {
         
         
 	public static void main(String[] args) throws InterruptedException {
+            
+               
+                
 		
 		System.out.println("Testing array reversing");
 		int[] inputArray = {1, 2, 3, 4, 5};
@@ -495,6 +625,7 @@ public class Main {
                 BinaryNode node6 = new BinaryNode(6);
                 BinaryNode node7 = new BinaryNode(7);
                 BinaryNode node8 = new BinaryNode(8);
+                BinaryNode root2 = new BinaryNode(5);
                 root.leftChild=node2;
                 root.rightChild=node5;
                 node2.leftChild=node1;
@@ -632,7 +763,7 @@ public class Main {
 		LinkedList<Integer> lista = new LinkedList<>();
                 LinkedList<Integer> lista2 = new LinkedList<>();
                 lista.addFirst(2);
-                lista.addFirst(2);
+                lista.addFirst(3);
                 lista.addFirst(18);
                 lista.addFirst(4);
                 lista.addFirst(15);
@@ -689,14 +820,77 @@ public class Main {
                 System.out.println(Arrays.toString(res.toArray()));
                 System.out.println(toBinary(9));
                 String xy = "xxhixx";
+                String xc = "xhxjxhxk";
                 //allStar(xy);
                 //endX(xy);
                 System.out.println(lista);
                 System.out.println(lista2);
-                System.out.println(intersect(lista, lista2));
+                
                 System.out.println(allStar(xy));
+                System.out.println("EndX: "+endX(xc));
                 System.out.println(endX(xy));
                 System.out.println(difference(lista, lista2));
+                root2.addNode(3);
+                root2.addNode(6);
+                //System.out.println(root2.findNode(3).value);
                 
+                //Ejercicios de repaso Final
+                
+                LinkedList<Integer> list = new LinkedList<Integer>();
+                list.addFirst(3);
+                list.addFirst(4);
+                list.addFirst(3);
+                list.addFirst(4);
+                list.addFirst(1);
+                list.addFirst(4);
+                list.addFirst(5);
+                System.out.println(Arrays.toString(list.toArray()));
+                list.reverseOrdeer(0, 1);
+                System.out.println(Arrays.toString(list.toArray()));
+                Stack<String> discos = new Stack<>();
+                discos.push("Doors");
+                discos.push("Beatles");
+                discos.push("Marilyn");discos.push("Doors");
+                discos.push("Daft Punk");
+                discos.push("Zoe");
+                discos.push("Enajbre");
+                discos.push("Natalia la Fourcade");
+                discos.push("Led Zeppellin");
+                System.out.println(Arrays.toString(discos.toArray()));
+                discos.removeAll("Doors");
+                System.out.println(Arrays.toString(discos.toArray()));
+                System.out.println("Lista 1:");
+                System.out.println(Arrays.toString(lista.toArray()));
+                lista2.addFirst(2);
+                lista2.addFirst(18);
+                lista2.addFirst(3);
+                lista2.addFirst(1);
+                lista2.addFirst(15);
+                lista.addLast(100);
+                System.out.println("Lista 2:");
+                System.out.println(Arrays.toString(lista2.toArray()));
+                System.out.println("Intersección: "+intersect(lista2, lista));
+                System.out.println("Diferencia :"+difference(lista, lista2));
+                String prueba = "(((()())()()))";
+                System.out.println("Profundidad maxima : "+maxDepth(prueba));
+                Stack <Integer> pila = new Stack<Integer>();
+                pila.push(1);
+                pila.push(2);
+                pila.push(3);
+                pila.push(4);
+                pila.push(5);
+                pila.push(6);
+                System.out.println(Arrays.toString(pila.toArray()));
+                System.out.println(get(pila, 2));
+                nToTop(pila, 4);
+                System.out.println(Arrays.toString(pila.toArray()));
+                
+                //programa();
+                
+                
+                //System.out.println(list.countValue(4));
+                //System.out.println(list.countValue(3));
+                //System.out.println(list.countValue(1));
 	}
+        
 }
